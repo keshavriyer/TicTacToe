@@ -5,6 +5,7 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
+import javafx.scene.text.TextAlignment;
 
 public class Controller {
 
@@ -25,13 +26,18 @@ public class Controller {
     public void resetGame(){
         turn=true;
         game=true;
+        
         gc = canvas.getGraphicsContext2D();
-        gc.clearRect(0, 0, 900, 900);
-        gc.setLineWidth(2);
-        gc.strokeLine(300, 0, 300, 900);
-        gc.strokeLine(600, 0, 600, 900);
-        gc.strokeLine(0, 300, 900, 300);
-        gc.strokeLine(0, 600, 900, 600);
+        gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
+        gc.setFill(Color.BLACK);
+        gc.fillRect(0, 0, canvas.getWidth(), canvas.getHeight());
+        gc.setStroke(Color.WHITE);
+        
+        gc.setLineWidth(5);
+        gc.strokeLine(canvas.getWidth()/3, 0, canvas.getWidth()/3, canvas.getHeight());
+        gc.strokeLine(canvas.getWidth()*2/3, 0, canvas.getWidth()*2/3, canvas.getHeight());
+        gc.strokeLine(0, canvas.getHeight()/3, canvas.getWidth(), canvas.getHeight()/3);
+        gc.strokeLine(0, canvas.getHeight()*2/3, canvas.getWidth(), canvas.getHeight()*2/3);
         for(int i = 0;i<3;i++){
             for(int j = 0;j<3;j++){
                 matrix[i][j]=-1;
@@ -85,15 +91,16 @@ public class Controller {
 
     @FXML
     public void drawX(int row,int col){
-        double x = col * 300 + 60;
-        double y = row * 300 + 60;
-        gc.strokeLine(x, y, x + 180, y + 180);
-        gc.strokeLine(x + 180, y, x, y + 180);
+        double x = col * canvas.getWidth()/3 + canvas.getWidth()/15;
+        double y = row * canvas.getHeight()/3 + canvas.getHeight()/15;
+        gc.strokeLine(x, y, x + canvas.getWidth()/5, y + canvas.getHeight()/5);
+        gc.strokeLine(x + canvas.getWidth()/5, y, x, y + canvas.getHeight()/5);
 
     }
     @FXML
     private void drawO(int row, int col) {
-        gc.strokeOval(col * 300 + 60, row * 300 + 60, 180, 180);
+        gc.strokeOval(col * canvas.getWidth()/3 + canvas.getWidth()/15, row * canvas.getHeight()/3 + canvas.getHeight()/15, canvas.getWidth()/5, canvas.getHeight()/5);
+        
     }
 
     private boolean isFull(){
@@ -145,27 +152,28 @@ public class Controller {
 
 
     public void checkWin(){
-        gc.setFont(Font.font("Verdana", 100)); 
-        gc.setStroke(Color.BLUE);
+        gc.setFont(Font.font("Verdana", canvas.getHeight()/9));
+        gc.setTextAlign(TextAlignment.CENTER); 
+        gc.setFill(Color.YELLOW);
         if(oWins()){
             game = false;
-            gc.strokeText("Player O wins", 100, 450);
-            gc.setFont(Font.font("Verdana", 30));
-            gc.strokeText("Click anywhere for a new game", 200, 500);
+            gc.fillText("Player O wins", canvas.getWidth()/2, canvas.getHeight()/2);
+            gc.setFont(Font.font("Verdana", canvas.getHeight()/30));
+            gc.fillText("Click anywhere for a new game", canvas.getWidth()/2, canvas.getHeight()*5/9);
         }
         else if(xWins()){
             game=false;
-            gc.strokeText("Player X wins", 100, 450);
-            gc.setFont(Font.font("Verdana", 30));
-            gc.strokeText("Click anywhere for a new game", 200, 500);
+            gc.fillText("Player X wins", canvas.getWidth()/2, canvas.getHeight()/2);
+            gc.setFont(Font.font("Verdana", canvas.getHeight()/30));
+            gc.fillText("Click anywhere for a new game", canvas.getWidth()/2, canvas.getHeight()*5/9);
         }
         else if(isFull()){
             game=false;
-            gc.strokeText("Game is a Tie", 100, 450);
-            gc.setFont(Font.font("Verdana", 30));
-            gc.strokeText("Click anywhere for a new game", 200, 500);
+            gc.fillText("Game is a Tie", canvas.getWidth()/2, canvas.getHeight()/2);
+            gc.setFont(Font.font("Verdana", canvas.getHeight()/30));
+            gc.fillText("Click anywhere for a new game", canvas.getWidth()/2, canvas.getHeight()*5/9);
         }
-        gc.setStroke(Color.BLACK);
+        gc.setStroke(Color.WHITE);
 
     }
 }
