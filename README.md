@@ -1,6 +1,6 @@
 ## Tic Tac Toe
 
-This is the javax canvas implementation of tic tac toe
+This is the javafx canvas implementation of tic tac toe
 
 ## Folder Structure
 
