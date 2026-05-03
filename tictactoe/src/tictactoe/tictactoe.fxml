@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-
-<?import javafx.scene.canvas.Canvas?>
-<?import javafx.scene.layout.AnchorPane?>
-
-<AnchorPane xmlns:fx="http://javafx.com/fxml" fx:controller="tictactoe.Controller">
-    <Canvas fx:id="canvas" width="900" height="900" />
-</AnchorPane>
